@@ -1,6 +1,16 @@
 # Agent Memory Hub
 
+![Agent Memory Hub](cover.png)
+
 Free resources for building persistent memory into AI agents. Videos, tutorials, and working code, organized by where you are in the learning curve.
+
+[![GitHub stars](https://img.shields.io/github/stars/actian-devs/agent-memory-hub?style=flat)](https://github.com/actian-devs/agent-memory-hub/stargazers)
+![Videos](https://img.shields.io/badge/-Videos-1a73e8)
+![Tutorials](https://img.shields.io/badge/-Tutorials-1a73e8)
+![Working Code](https://img.shields.io/badge/-Working%20Code-1a73e8)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
+
+**Jump to:** [Understand It](#understand-it) · [Build It](#build-it) · [Deploy It](#deploy-it) · [Get Started](#get-started)
 
 ---
 
