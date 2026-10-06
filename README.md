@@ -42,6 +42,7 @@ All implementations use [VectorAI DB](https://www.actian.com/databases/vectorai-
 | [Is Agentic AI Architecture Different for On-Premises and Edge?](https://open.substack.com/pub/madamcto/p/is-agentic-ai-architecture-different) | Article | 8 min read | Advanced |
 | [Edge Retrieval Pipeline with VectorAI DB (No Internet Required)](https://www.youtube.com/watch?v=GtRUOUbDTB0) | Video | 9 min | Advanced |
 | [Running Gemma 2B on Edge Hardware with Actian VectorAI DB](https://actiandev.hashnode.dev/running-gemma-2b-on-edge-hardware-with-actian-vectorai-db) | Blog post | 12 min read | Advanced |
+| [Agent with Long-Term Memory (pydantic-ai + VectorAI DB)](https://github.com/alexeygrigorev/mem-hub) | Working code | 15 min setup | Intermediate |
 
 ---
 
@@ -98,6 +99,16 @@ If you have used mem0 and discovered it calls OpenAI by default, the fix is thre
 If you have deployed a CrewAI application with `memory=True` and you are seeing `"database is locked"` errors under concurrent load, lost memory after a container restart, or memory bleeding between users in a multi-tenant deployment, all three trace to the same cause: CrewAI's default memory backend does not hold up under production conditions. This tutorial shows you how to drop in VectorAI DB as the storage backend without touching your agents or tasks. The migration path takes one new file and two lines of changes to your existing Crew instantiation.
 
 **You will learn:** how to implement the `StorageBackend` protocol, how to scope memory per user with `root_scope`, and how to persist crew memory across runs with a local vector store.
+
+---
+
+### pydantic-ai with VectorAI DB memory
+
+**[Agent with Long-Term Memory (pydantic-ai + VectorAI DB)](https://github.com/alexeygrigorev/mem-hub)** (Working code)
+
+A compact implementation of the persistent memory pattern from the tutorial above, built with [pydantic-ai](https://ai.pydantic.dev/). The agent loads relevant memories from VectorAI DB at the start of every session and writes new ones itself, with a `save_memory` tool, the moment it notices a lasting fact. Embeddings run locally with `all-MiniLM-L6-v2`, so the whole memory stack stays self-hosted. The repo README walks through the demo loop: one chat doesn't know, another chat saves the fact, a restarted first chat knows it.
+
+**You will learn:** how to expose memory writes as agent tools instead of a fixed pipeline step, how to preload session context with similarity search, and how to stream tool calls so memory operations are visible in the interface.
 
 ---
 
