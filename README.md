@@ -42,7 +42,7 @@ All implementations use [VectorAI DB](https://www.actian.com/databases/vectorai-
 | [Is Agentic AI Architecture Different for On-Premises and Edge?](https://open.substack.com/pub/madamcto/p/is-agentic-ai-architecture-different) | Article | 8 min read | Advanced |
 | [Edge Retrieval Pipeline with VectorAI DB (No Internet Required)](https://www.youtube.com/watch?v=GtRUOUbDTB0) | Video | 9 min | Advanced |
 | [Running Gemma 2B on Edge Hardware with Actian VectorAI DB](https://actiandev.hashnode.dev/running-gemma-2b-on-edge-hardware-with-actian-vectorai-db) | Blog post | 12 min read | Advanced |
-| [Gmail Reply Agent with Long-Term Memory (pydantic-ai + VectorAI DB)](https://github.com/alexeygrigorev/mem-hub) | Working code | 15 min setup | Intermediate |
+| [Gmail Reply Agent with Long-Term Memory (pydantic-ai + VectorAI DB)](https://github.com/alexeygrigorev/gmail-memory-assistant) | Working code | 15 min setup | Intermediate |
 
 ---
 
@@ -104,7 +104,7 @@ If you have deployed a CrewAI application with `memory=True` and you are seeing 
 
 ### pydantic-ai with VectorAI DB memory
 
-**[Gmail Reply Agent with Long-Term Memory (pydantic-ai + VectorAI DB)](https://github.com/alexeygrigorev/mem-hub)** (Working code)
+**[Gmail Reply Agent with Long-Term Memory (pydantic-ai + VectorAI DB)](https://github.com/alexeygrigorev/gmail-memory-assistant)** (Working code)
 
 A Chrome extension for Gmail that drafts email replies and remembers how you like them written. It applies the persistent memory pattern from the tutorial above with [pydantic-ai](https://ai.pydantic.dev/). When you correct a draft ("for speaker invitations, keep it under 100 words and ask about the audience"), the agent saves that correction to VectorAI DB as a rule tagged with an email category. On the next relevant email, in a different thread or after a restart, it retrieves the matching rules and applies them without being told again. Rules for one kind of email don't leak into unrelated ones. A memory indicator in Gmail shows which saved rules were used for each draft. Embeddings run locally with `all-MiniLM-L6-v2`, so the memory stack stays self-hosted.
 
