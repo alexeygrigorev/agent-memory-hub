@@ -33,11 +33,14 @@ All implementations use [VectorAI DB](https://www.actian.com/databases/vectorai-
 |---|---|---|---|
 | [What Is Agent Memory? Architecture and Deployment Patterns](https://www.youtube.com/watch?v=lq9AVW87B-g) | Video | 7 min | Beginner |
 | [AI Agent Memory Explained: Context Windows Aren't Enough](https://www.youtube.com/watch?v=TG1J5KYfGGc) | Video | 7 min | Beginner |
+| [What You Need to Know About AI Agent Memory Architecture](https://dev.to/actiandev/what-you-need-to-know-about-ai-agent-memory-architecture-49ek) | Blog post | 13 min read | Beginner |
 | [How to Build Persistent Agent Memory Across Sessions](https://actiandev.hashnode.dev/how-to-build-persistent-agent-memory-across-sessions) | Blog post | 10 min read | Intermediate |
 | [How Do You Add Persistent Memory to a mem0 Agent with VectorAI DB?](https://www.youtube.com/watch?v=50JBpuoOiPU) | Video | 10 min | Intermediate |
 | [How to Self-Host mem0 with a Local Vector Store](https://dev.to/actiandev/how-to-self-host-mem0-with-a-local-vector-store-21on) | Blog post | 12 min read | Intermediate |
 | [Replace CrewAI Memory in Production With VectorAI DB](https://www.actian.com/blog/developer/replace-crewai-memory-in-production-with-vectorai-db/) | Blog post | 10 min read | Intermediate |
 | [Build an OpenClaw Memory Plugin with Actian VectorAI DB](https://dev.to/actiandev/build-an-openclaw-memory-plugin-with-actian-vectorai-db-3gh2) | Blog post | 10 min read | Intermediate |
+| [Add Persistent Memory to a Pydantic AI Agent With VectorAI DB](https://youtu.be/Gs9ybdFMqFc) | Video | — | Intermediate |
+| [Add Persistent Memory to a Pydantic AI Agent With VectorAI DB](https://www.actian.com/blog/developer/add-persistent-memory-to-a-pydantic-ai-agent-with-vectorai-db/) | Blog post | 12 min read | Intermediate |
 | [How Do You Build a Document Q&A Agent with LangChain and VectorAI DB?](https://www.youtube.com/watch?v=32YkFcACBGg) | Video | 4 min | Intermediate |
 | [Is Agentic AI Architecture Different for On-Premises and Edge?](https://open.substack.com/pub/madamcto/p/is-agentic-ai-architecture-different) | Article | 8 min read | Advanced |
 | [Edge Retrieval Pipeline with VectorAI DB (No Internet Required)](https://www.youtube.com/watch?v=GtRUOUbDTB0) | Video | 9 min | Advanced |
@@ -47,9 +50,9 @@ All implementations use [VectorAI DB](https://www.actian.com/databases/vectorai-
 
 ## Start Here Based on Where You Are
 
-**New to agent memory?** Start with [What Is Agent Memory?](https://www.youtube.com/watch?v=lq9AVW87B-g) then move to [How to Build Persistent Agent Memory Across Sessions](https://actiandev.hashnode.dev/how-to-build-persistent-agent-memory-across-sessions).
+**New to agent memory?** Start with [What Is Agent Memory?](https://www.youtube.com/watch?v=lq9AVW87B-g) then read [What You Need to Know About AI Agent Memory Architecture](https://dev.to/actiandev/what-you-need-to-know-about-ai-agent-memory-architecture-49ek) and move to [How to Build Persistent Agent Memory Across Sessions](https://actiandev.hashnode.dev/how-to-build-persistent-agent-memory-across-sessions).
 
-**Already building agents and want to add memory?** Go straight to [Build It](#build-it) and pick the framework you are already using (CrewAI, mem0, LangChain, or OpenClaw).
+**Already building agents and want to add memory?** Go straight to [Build It](#build-it) and pick the framework you are already using (CrewAI, mem0, LangChain, OpenClaw, or PydanticAI).
 
 **Deploying on-prem or edge?** Start with [Deploy It](#deploy-it).
 
@@ -64,6 +67,10 @@ If your agent treats every session like the first one, using a smarter model wil
 **[AI Agent Memory Explained: Context Windows Aren't Enough](https://www.youtube.com/watch?v=TG1J5KYfGGc)** (7 min video)
 
 A bigger context window does not fix an agent that keeps forgetting things. This video explains why. You will learn the one-line distinction between context and memory, why the context window degrades as it fills (not just when it runs out), what the "lost in the middle" effect is and the accuracy hit it causes, the two failure modes behind almost every forgetting problem, and a three-question framework for designing the right memory architecture for your use case.
+
+**[What You Need to Know About AI Agent Memory Architecture](https://dev.to/actiandev/what-you-need-to-know-about-ai-agent-memory-architecture-49ek)** (Blog post)
+
+A written guide to how agents keep memory across sessions. It covers the four memory types (working, episodic, semantic, and procedural), five architecture patterns from a context-window-only setup to enterprise deployments with a governance layer, and the write-manage-read loop that decides what an agent remembers and how it finds it again. It also explains the "context-resident failure," where a team relies on the context window for long-term storage, and recommends starting with episodic memory backed by a flat external vector store.
 
 ---
 
@@ -98,6 +105,18 @@ If you have used mem0 and discovered it calls OpenAI by default, the fix is thre
 If you have deployed a CrewAI application with `memory=True` and you are seeing `"database is locked"` errors under concurrent load, lost memory after a container restart, or memory bleeding between users in a multi-tenant deployment, all three trace to the same cause: CrewAI's default memory backend does not hold up under production conditions. This tutorial shows you how to drop in VectorAI DB as the storage backend without touching your agents or tasks. The migration path takes one new file and two lines of changes to your existing Crew instantiation.
 
 **You will learn:** how to implement the `StorageBackend` protocol, how to scope memory per user with `root_scope`, and how to persist crew memory across runs with a local vector store.
+
+---
+
+### PydanticAI with VectorAI DB memory
+
+**[Add Persistent Memory to a Pydantic AI Agent With VectorAI DB](https://www.actian.com/blog/developer/add-persistent-memory-to-a-pydantic-ai-agent-with-vectorai-db/)** (Blog post)
+
+**[Add Persistent Memory to a Pydantic AI Agent With VectorAI DB](https://youtu.be/Gs9ybdFMqFc)** (Video)
+
+PydanticAI does not persist memory by default, and simple backends like FileStore only match literal text. Save "I deploy with Terraform through GitHub Actions" and later ask "what tools do I use for infrastructure deployments?" and the two never connect. This tutorial fixes that by turning memories into embeddings with sentence-transformers and storing them in VectorAI DB in Docker, so recall works by meaning. The video walks through the same build, and the full code is in the [community repo](https://github.com/actian-devs/developer-content/tree/main/blog/pydantic-ai-memory-article).
+
+**You will learn:** how to build a memory store with store, search, list, and delete, how to split answering and fact extraction into two agents so the extractor only sees what the user actually said, how to scope every operation by user ID, and how to tune similarity thresholds against real retrieval scores.
 
 ---
 
